@@ -1,16 +1,8 @@
 <div align="center">
   <img src="docs/assets/wavel-mark.svg" width="112" alt="Wavel Wallet logo">
   <h1>Wavel Wallet</h1>
-  <p><strong>Source code for a local-first desktop EVM wallet.</strong></p>
-
-  [![Status: development](https://img.shields.io/badge/status-in%20development-f5a623)](docs/ROADMAP.md)
   [![License: MIT](https://img.shields.io/badge/license-MIT-32c48d)](LICENSE)
 </div>
-
-> [!WARNING]
-> Wavel Wallet is an unaudited application under development, not a published product.
-> The source can create, import, and sign with real keys, but it is intended for code
-> review and development. Do not use it to store production funds.
 
 ## Application Source
 
