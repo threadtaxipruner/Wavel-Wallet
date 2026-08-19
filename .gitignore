@@ -1,0 +1,32 @@
+# Secrets and runtime data
+.env
+*.env
+!*.env.example
+application.env
+data/
+ssl/
+*.db
+*.sqlite*
+*.pem
+*.key
+
+# Private production services
+application-api.py
+extract-jobs.py
+site/download-telemetry.js
+site/work-panel.*
+jobs-site/
+
+# Generated and backup files
+*.bak
+*.bak-*
+*.bak_*
+*.20*.bak
+__pycache__/
+*.py[cod]
+.DS_Store
+Thumbs.db
+
+# Editors
+.idea/
+.vscode/
