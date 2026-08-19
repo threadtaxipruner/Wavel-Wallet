@@ -1,32 +1,35 @@
-# Secrets and runtime data
+# Local and generated files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
 .env
-*.env
-!*.env.example
+.env.*
+dist/
+out/
+build/
+coverage/
+node_modules/
+
+# Website deployment is maintained outside this repository
+site/
+jobs-site/
+application-api.py
+extract-jobs.py
+docker-compose.yml
+nginx.conf
 application.env
 data/
 ssl/
+*.bak
+*.bak-*
 *.db
-*.sqlite*
 *.pem
 *.key
 
-# Private production services
-application-api.py
-extract-jobs.py
-site/download-telemetry.js
-site/work-panel.*
-jobs-site/
-
-# Generated and backup files
-*.bak
-*.bak-*
-*.bak_*
-*.20*.bak
-__pycache__/
-*.py[cod]
-.DS_Store
-Thumbs.db
-
-# Editors
-.idea/
-.vscode/
+# Never commit wallet material
+*.wallet
+*.keystore
+*.seed
+vault.json

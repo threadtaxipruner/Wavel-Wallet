@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title">
+  <title id="title">Wavel Wallet</title>
+  <defs>
+    <linearGradient id="gradient" x1="18" y1="18" x2="110" y2="110" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#9f8cff"/>
+      <stop offset="1" stop-color="#6346e8"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="32" fill="#111116"/>
+  <path d="M25 39l16 52 23-37 23 37 16-52" fill="none" stroke="url(#gradient)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -1,17 +1,34 @@
 # Security Policy
 
-## Reporting a vulnerability
+## Current Status
 
-Do not disclose security vulnerabilities in public issues. Use GitHub's private
-security advisory feature for this repository and include reproduction steps,
-impact, and any suggested mitigation.
+Wavel is currently a pre-alpha specification with no official wallet release. Do not
+use repository experiments or third-party binaries to store funds.
 
-Never include real recovery phrases, private keys, user records, credentials, or
-other sensitive data in a report. Use test accounts and redacted evidence.
+## Reporting
 
-## Scope
+Do not publish suspected vulnerabilities in a public issue. Use GitHub's private
+security advisory feature for this repository. Include the affected document or
+component, impact, reproduction steps, and a suggested mitigation when possible.
 
-This repository contains a static website. It does not contain wallet key
-management or transaction-signing code. Reports about deployed infrastructure or
-unpublished applications should be sent through the official Wavel security
-contact instead of a public issue.
+Never include a real recovery phrase, private key, password, wallet file, user record,
+or production credential. Use generated test fixtures and redact sensitive evidence.
+
+## Response Targets
+
+These targets begin when an active maintainer team and implementation exist:
+
+| Severity | Initial response target |
+| --- | --- |
+| Critical | 24 hours |
+| High | 3 business days |
+| Medium | 7 business days |
+| Low | 14 business days |
+
+Targets are not a bug bounty or guarantee of payment. Any future bounty program will
+be announced in this file and on the official repository.
+
+## Supported Versions
+
+There are currently no supported production versions. This section will list supported
+release lines before the first public beta.
