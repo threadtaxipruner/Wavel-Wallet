@@ -1,59 +1,45 @@
 # Roadmap
 
-The roadmap uses security and quality gates rather than delivery dates. Items are
-proposals until linked to merged source and a published release.
+The roadmap uses security and quality gates rather than promised dates. Checked items
+exist in source; a checked item does not imply an audit or production-security claim.
 
-## Phase 0: Specification - In progress
+## Desktop EVM MVP - Shipped Source
 
-- [x] Product scope and non-goals
-- [x] Proposed architecture and trust boundaries
-- [x] Initial threat model
-- [x] Network admission policy
-- [ ] Architecture decision records for implementation stack and vault format
-- [ ] Maintainer and governance model
+- [x] Electron, TypeScript, and Vite Windows application
+- [x] Sandboxed/context-isolated renderer and typed allowlisted IPC
+- [x] BIP-39 create/import and one EVM account at `m/44'/60'/0'/0/0`
+- [x] Versioned scrypt and AES-256-GCM vault wrapped by OS `safeStorage` when available
+- [x] Ethereum, Base, Arbitrum One, Optimism, and Polygon native balances
+- [x] Receive/address copy and native-asset sends with fee review
+- [x] Expiring immutable transaction confirmation before signing and broadcast
+- [x] Chain-ID-verified configurable RPC endpoints
+- [x] Lock, automatic lock, vault crypto tests, CI, and unsigned Windows NSIS packaging
 
-## Phase 1: Offline Prototype - Planned
+## Beta Hardening - In Progress
 
-- [ ] Isolated wallet core
-- [ ] BIP-39 create and restore flows
-- [ ] Encrypted, versioned local vault
-- [ ] Multiple EVM accounts and watch-only mode
-- [ ] Session lock and sensitive-memory review
-- [ ] Known-answer, corruption, and migration tests
+- [ ] Independent security review and remediation
+- [ ] Signed Windows installer and documented signing-key ownership
+- [ ] End-to-end transaction tests against controlled development chains
+- [ ] Vault corruption, migration, and recovery test expansion
+- [ ] Transaction simulation and richer calldata review
+- [ ] Reproducible-build analysis and dependency SBOM
+- [ ] Privacy/provider failover design that never silently changes chain
 
-**Gate:** no network access is enabled until key lifecycle tests and internal security
-review pass.
+## Wallet Expansion - Planned
 
-## Phase 2: EVM Preview - Planned
-
-- [ ] Network adapter interface
-- [ ] Read-only balances and activity
-- [ ] Receive flow with QR and chain context
-- [ ] Native-asset send with fee review
-- [ ] Transaction simulation and decoded confirmation
-- [ ] Custom RPC endpoints
-
-**Gate:** preview builds use testnets only and display an experimental warning.
-
-## Phase 3: Public Beta - Proposed
-
-- [ ] Selected EVM mainnets
-- [ ] Fungible tokens and approval management
-- [ ] WalletConnect sessions
+- [ ] Multiple accounts and watch-only accounts
+- [ ] Fungible token balances, transfers, and approval management
+- [ ] Transaction history with explicit indexing privacy controls
 - [ ] Hardware-wallet integration
-- [ ] Signed Windows installer
+- [ ] WalletConnect with granular permissions
 - [ ] Signed and notarized macOS package
-- [ ] Checksums, provenance, and reproducible-build instructions
 
-**Gate:** independent assessment completed with no unresolved critical findings.
+## Research
 
-## Phase 4: Ecosystem Expansion - Research
-
-- [ ] Bitcoin adapter proposal
-- [ ] Solana adapter proposal
-- [ ] Collectible transfers
+- [ ] Bitcoin and Solana adapter proposals
+- [ ] Collectible support
 - [ ] Swap aggregation threat model
-- [ ] Privacy-preserving indexing research
+- [ ] Privacy-preserving indexing
 
 Cross-chain swaps, bridges, lending, and other high-risk integrations remain out of
-scope until their separate threat models are approved.
+scope until separately threat-modeled and reviewed.

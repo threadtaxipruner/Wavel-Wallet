@@ -1,195 +1,112 @@
 <div align="center">
   <img src="docs/assets/wavel-mark.svg" width="112" alt="Wavel Wallet logo">
   <h1>Wavel Wallet</h1>
-  <p><strong>An open specification for a self-custody multichain desktop wallet.</strong></p>
-  <p>Designed for Windows and macOS with security, clarity, and verifiability as first-class requirements.</p>
+  <p><strong>Source code for a local-first desktop EVM wallet.</strong></p>
 
-  [![Status: concept](https://img.shields.io/badge/status-concept%20%2F%20pre--alpha-f5a623)](docs/ROADMAP.md)
-  [![Platforms](https://img.shields.io/badge/platforms-Windows%20%7C%20macOS-7650ff)](docs/PRODUCT.md)
+  [![Status: development](https://img.shields.io/badge/status-in%20development-f5a623)](docs/ROADMAP.md)
   [![License: MIT](https://img.shields.io/badge/license-MIT-32c48d)](LICENSE)
 </div>
 
 > [!WARNING]
-> Wavel is currently a **product and technical specification**, not a released wallet.
-> This repository does not contain production wallet binaries or an audited signing
-> implementation. Do not use it to store funds and do not download applications
-> claiming to be official Wavel releases.
+> Wavel Wallet is an unaudited application under development, not a published product.
+> The source can create, import, and sign with real keys, but it is intended for code
+> review and development. Do not use it to store production funds.
 
-## Overview
+## Application Source
 
-Wavel is a proposed non-custodial desktop wallet that brings accounts, tokens,
-collectibles, swaps, and dApp connections into one focused application. The goal is
-to make multichain ownership understandable without hiding network fees, signing
-requests, approval scope, or recovery responsibilities from the user.
+This repository contains the implementation of a future Electron desktop wallet with:
 
-The project is guided by five principles:
+- BIP-39 wallet creation/import and standard EVM derivation at `m/44'/60'/0'/0/0`
+- A versioned local vault encrypted with scrypt and AES-256-GCM, with that encrypted
+  payload wrapped by Electron `safeStorage` when the OS supports it
+- Ethereum, Base, Arbitrum One, Optimism, and Polygon native balances and transfers
+- Replaceable, keyless RPC endpoints with chain-ID verification
+- Fee estimation followed by an explicit, expiring confirmation before local signing
+- Receive/address copy, manual lock, and configurable automatic lock
+- Sandboxed renderer, context isolation, strict CSP, allowlisted typed IPC, no Node.js
+  renderer integration, no remote application content, and no telemetry
 
-1. **Keys stay local.** Secret material must never be sent to Wavel services.
-2. **Signing is explicit.** Every signature must have human-readable context.
-3. **Networks are isolated.** A failure in one integration must not compromise others.
-4. **Privacy is the default.** No wallet addresses or activity analytics without consent.
-5. **Releases are verifiable.** Published artifacts should be signed and reproducible.
+The MVP does not display tokens or transaction history, connect to dApps or hardware
+wallets, simulate transactions, manage multiple accounts, or update itself. The Windows
+installer is currently unsigned. There has been no independent security audit.
 
-## Project Status
+## Build And Run
 
-| Area | Status | Notes |
-| --- | --- | --- |
-| Product specification | In progress | Core flows and scope are documented |
-| Architecture | Proposed | Subject to review before implementation |
-| Threat model | Initial draft | Requires independent security review |
-| Wallet core | Not implemented | No key generation or signing code is published |
-| Desktop application | Not implemented | Windows and macOS are target platforms |
-| Security audit | Not started | No audit claims are made |
-| Official releases | None | GitHub Releases is currently empty by design |
+Requirements: Node.js 22, npm 10, and Windows 10/11 for the packaged application.
 
-See the [roadmap](docs/ROADMAP.md) for clear delivery gates.
-
-## Intended Experience
-
-### One portfolio
-
-Wavel is designed to combine native assets, fungible tokens, and collectibles while
-retaining the network and account context of every balance. Fiat values are display
-metadata only and never replace on-chain amounts.
-
-### Safer transactions
-
-Before signing, Wavel should show the recipient, asset, amount, selected network,
-estimated fee, contract interaction, token approvals, and simulation warnings. Raw
-calldata remains available for expert review.
-
-### Desktop-first security
-
-The target application uses a narrow desktop shell around an isolated wallet core.
-The UI cannot read plaintext secrets. Sensitive operations cross a typed command
-boundary and require an unlocked session plus explicit user confirmation.
-
-### Portable recovery
-
-The proposed first release uses standard BIP-39 recovery phrases and established
-derivation standards rather than a Wavel-specific backup format. Hardware-wallet
-support is preferred before expanding to high-risk protocol integrations.
-
-## Proposed Feature Set
-
-| Capability | Initial scope | Long-term direction |
-| --- | --- | --- |
-| Wallets | Create/import, multiple accounts, receive/send | Hardware wallets, watch-only accounts |
-| Assets | Native coins and common tokens | Curated token lists and spam filtering |
-| Networks | Selected EVM networks first | Bitcoin, Solana, and additional ecosystems |
-| Collectibles | Read-only gallery | Transfer and richer metadata controls |
-| dApps | WalletConnect sessions | Granular permissions and session policies |
-| Swaps | Quote comparison and transparent fees | Cross-chain routing after security review |
-| Security | Encrypted local vault and auto-lock | OS-backed protection and external signing |
-
-All capabilities above are requirements unless explicitly marked as shipped in the
-[roadmap](docs/ROADMAP.md).
-
-## Proposed Networks
-
-Implementation is intentionally phased. Similar address formats do not imply similar
-security assumptions.
-
-**Phase 1 candidates:** Ethereum, Base, Arbitrum, Optimism, Polygon, BNB Chain, and
-Avalanche C-Chain.
-
-**Research candidates:** Bitcoin, Solana, Cosmos, Polkadot, Cardano, NEAR, TON, TRON,
-Sui, Aptos, Algorand, and XRP Ledger.
-
-No network is considered supported until its adapter, transaction parser, tests, and
-release checklist are complete. Read the [network policy](docs/NETWORKS.md).
-
-## Architecture At A Glance
-
-```text
-┌──────────────────────── Desktop UI ────────────────────────┐
-│ Portfolio · Accounts · Receive · Send · Activity · dApps  │
-└───────────────────────────┬────────────────────────────────┘
-                            │ typed, allowlisted commands
-┌───────────────────────────▼────────────────────────────────┐
-│ Application controller                                    │
-│ Session lock · permissions · transaction review · policy  │
-└───────────────┬────────────────────────────┬───────────────┘
-                │                            │
-┌───────────────▼──────────────┐  ┌─────────▼────────────────┐
-│ Isolated wallet core         │  │ Network adapters          │
-│ Vault · derivation · signing │  │ RPC · indexing · decoding │
-└───────────────┬──────────────┘  └─────────┬────────────────┘
-                │                            │
-        encrypted local data          untrusted providers
+```powershell
+npm ci
+npm run typecheck
+npm test
+npm run build
+npm run dev
 ```
 
-The complete proposal is in [Architecture](docs/ARCHITECTURE.md).
+`npm run dev` builds local source and opens Electron. It does not load a remote dev
+server. Wallet data is stored under Electron's per-user application data directory,
+not in the repository.
 
-## Security Model
+## Local Package
 
-Wavel assumes the renderer, RPC endpoints, token metadata, dApps, and remote content
-can be malicious. Private keys should exist in plaintext only inside the isolated
-wallet core for the shortest practical time. The application must never log recovery
-phrases, private keys, passwords, raw vaults, or complete address histories.
+Developers can optionally create an unsigned local NSIS package for testing:
 
-The initial threat model covers:
+```powershell
+$env:CSC_IDENTITY_AUTO_DISCOVERY="false"
+npm run dist:win
+```
 
-- Theft of the local encrypted vault
-- Malicious websites and WalletConnect peers
-- Compromised or dishonest RPC providers
-- Clipboard replacement and address poisoning
-- Unlimited token approvals and deceptive calldata
-- Dependency, build pipeline, and release-channel compromise
-- Screen capture, crash dumps, swap files, and diagnostic logs
+Artifacts are written to `release/` and are ignored by Git. They are development
+artifacts, not official downloads or releases. No installer is published by this
+repository.
 
-Read [Security Model](docs/SECURITY-MODEL.md) and [Security Policy](SECURITY.md).
+## Security Design
+
+Key generation, vault decryption, derivation, signing, and RPC access run in Electron's
+main process. The renderer receives only public wallet state and prepared transaction
+details. The sole exception is onboarding: a newly generated mnemonic crosses the
+narrow preload bridge once for display, while an imported phrase exists in its input.
+No mnemonic/private-key export API exists.
+
+The vault always requires the user's password. `safeStorage` wraps the password-encrypted
+payload with OS-account-bound protection when available; it does not replace the
+password layer or store a separately recoverable mnemonic. JavaScript runtimes
+cannot guarantee complete zeroization of immutable strings, crash dumps, or copied
+memory. Locking discards wallet object references and pending confirmations, but this
+limitation remains part of the residual risk.
+
+Default public RPC providers receive the selected public address, IP address, and RPC
+requests. They never receive private keys or recovery phrases. Public endpoints may be
+rate-limited or unavailable. Custom RPC URLs must use HTTPS (except localhost) and may
+not contain credentials, query parameters, or fragments so API secrets are not stored.
+
+See [Security Model](docs/SECURITY-MODEL.md), [Architecture](docs/ARCHITECTURE.md), and
+[Security Policy](SECURITY.md). Report vulnerabilities privately as described there.
 
 ## Repository Map
 
 ```text
-docs/
-├── ARCHITECTURE.md       Proposed components and trust boundaries
-├── NETWORKS.md           Network admission and adapter requirements
-├── PRODUCT.md            Personas, flows, UX rules, and non-goals
-├── ROADMAP.md            Delivery phases and release gates
-├── SECURITY-MODEL.md     Assets, threats, controls, and residual risk
-└── assets/               Public project artwork
-.github/                  Contribution and issue templates
-CONTRIBUTING.md           How to propose and review changes
-SECURITY.md               Private vulnerability reporting policy
+src/main/        Electron lifecycle, vault, wallet, RPC, signing, IPC
+src/preload/     Narrow contextBridge API
+src/renderer/    Local Vite/TypeScript interface
+src/shared/      Typed IPC contract
+scripts/         Local build helpers
+.github/         Continuous integration checks
+docs/            Product, architecture, network, and security documents
 ```
 
-## Development
+## Network Defaults
 
-There is no runnable wallet yet. The next implementation step is an architecture
-decision record selecting the desktop shell and wallet-core language. Source code,
-build commands, tests, and CI badges will be added only when they exist and work from
-a clean checkout.
+| Network | Chain ID | Native asset | Default RPC |
+| --- | ---: | --- | --- |
+| Ethereum | 1 | ETH | `https://ethereum-rpc.publicnode.com` |
+| Base | 8453 | ETH | `https://mainnet.base.org` |
+| Arbitrum One | 42161 | ETH | `https://arb1.arbitrum.io/rpc` |
+| Optimism | 10 | ETH | `https://mainnet.optimism.io` |
+| Polygon | 137 | POL | `https://polygon-bor-rpc.publicnode.com` |
 
-To contribute now, review an open proposal or submit a focused design issue. See
-[CONTRIBUTING.md](CONTRIBUTING.md).
-
-## Releases And Verification
-
-Wavel has no official releases today. A future release is not considered valid unless:
-
-- It is published under this repository's GitHub Releases page
-- Its source tag is signed by a documented maintainer key
-- SHA-256 checksums and signatures are provided
-- CI provenance is attached to each artifact
-- Windows and macOS artifacts pass the release security checklist
-- Reproducible-build differences are documented
-
-Never trust download links from advertisements, direct messages, or unrelated domains.
-
-## Documentation
-
-- [Product specification](docs/PRODUCT.md)
-- [Architecture](docs/ARCHITECTURE.md)
-- [Security model](docs/SECURITY-MODEL.md)
-- [Network support policy](docs/NETWORKS.md)
-- [Roadmap](docs/ROADMAP.md)
-- [Contributing](CONTRIBUTING.md)
-- [Security reporting](SECURITY.md)
+These are third-party public services, not Wavel infrastructure or endorsements.
 
 ## License
 
-Documentation and future source code in this repository are available under the
-[MIT License](LICENSE). Third-party protocols, trademarks, and network names remain
-the property of their respective owners.
+Wavel Wallet source and documentation are available under the [MIT License](LICENSE).
+Network names and third-party trademarks belong to their respective owners.

@@ -1,4 +1,4 @@
-# Proposed Architecture
+# Architecture
 
 ## Goals
 
@@ -105,11 +105,18 @@ checksums, signatures, build provenance, malware scanning, and notarization or c
 signing where applicable. Maintainers must document signing-key ownership and incident
 recovery before the first release.
 
+## Implemented MVP Decisions
+
+- Electron desktop shell with a sandboxed, context-isolated Vite renderer
+- Typed allowlisted IPC through a narrow preload bridge
+- Main-process wallet core and RPC adapter using ethers
+- BIP-39 with the first EVM account at `m/44'/60'/0'/0/0`
+- Versioned scrypt and AES-256-GCM vault, wrapped with `safeStorage` when available
+
 ## Decisions Still Required
 
-- Desktop shell and wallet-core implementation languages
-- Process isolation and IPC transport
-- Vault KDF, authenticated cipher, and parameter migration
+- Further wallet-core process isolation beyond Electron main
+- Vault parameter migration and recovery procedures
 - Hardware-wallet protocol libraries
 - Indexing strategy and privacy-preserving provider defaults
 - Update mechanism and rollback protection

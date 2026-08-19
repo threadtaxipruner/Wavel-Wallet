@@ -16,13 +16,13 @@ A network is supported only when all requirements below are met:
 
 Marketing references or shared address formats do not constitute support.
 
-## Proposed Rollout
+## Rollout
 
-### Stage 1: EVM foundation
+### Stage 1: EVM foundation - MVP source
 
-Candidate networks are Ethereum, Base, Arbitrum, Optimism, Polygon, BNB Chain, and
-Avalanche C-Chain. A common adapter may share primitives, but each chain keeps an
-independent chain ID, native asset, explorer, fee behavior, and test suite.
+The desktop MVP supports native balances and native transfers on Ethereum, Base,
+Arbitrum One, Optimism, and Polygon. Each keeps an independent chain ID, native asset,
+explorer, and configurable RPC URL. Tokens and transaction history are not implemented.
 
 ### Stage 2: Hardware and dApp maturity
 

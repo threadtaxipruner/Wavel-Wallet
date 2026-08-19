@@ -2,8 +2,10 @@
 
 ## Current Status
 
-Wavel is currently a pre-alpha specification with no official wallet release. Do not
-use repository experiments or third-party binaries to store funds.
+Wavel Wallet is an unaudited beta implementation capable of signing mainnet
+transactions. The source and unsigned Windows packaging configuration are public, but
+there has been no independent security assessment. Use only generated test fixtures
+when reporting issues and begin with small amounts if evaluating the application.
 
 ## Reporting
 
@@ -16,7 +18,7 @@ or production credential. Use generated test fixtures and redact sensitive evide
 
 ## Response Targets
 
-These targets begin when an active maintainer team and implementation exist:
+These are best-effort maintainer targets, not guaranteed service levels:
 
 | Severity | Initial response target |
 | --- | --- |
@@ -30,5 +32,5 @@ be announced in this file and on the official repository.
 
 ## Supported Versions
 
-There are currently no supported production versions. This section will list supported
-release lines before the first public beta.
+No production version is currently supported. The `0.1.x-beta` source line is the
+current development line and receives fixes without a long-term support commitment.
