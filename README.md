@@ -1,7 +1,7 @@
 <div align="center">
   <img src="docs/assets/wavel-logo.svg" width="112" alt="Wavel Wallet logo">
   <h1>Wavel Wallet</h1>
-  [![License: MIT](https://img.shields.io/badge/license-MIT-32c48d)](LICENSE)
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-32c48d" alt="License: MIT"></a>
 </div>
 
 <p align="center">
