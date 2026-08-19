@@ -1,8 +1,13 @@
 <div align="center">
-  <img src="docs/assets/wavel-mark.svg" width="112" alt="Wavel Wallet logo">
+  <img src="docs/assets/wavel-logo.svg" width="112" alt="Wavel Wallet logo">
   <h1>Wavel Wallet</h1>
   [![License: MIT](https://img.shields.io/badge/license-MIT-32c48d)](LICENSE)
 </div>
+
+<p align="center">
+  <img src="docs/assets/wavel-dashboard.png" width="49%" alt="Wavel Wallet dashboard">
+  <img src="docs/assets/wavel-collect.png" width="49%" alt="Wavel Wallet collectibles">
+</p>
 
 ## Application Source
 
